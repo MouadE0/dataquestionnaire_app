@@ -15,11 +15,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.get("/mouad", async (req, res) => {
-    const users = await prisma.user.findMany({
-         where: {x
-             id: 1
-         }
-    })
+    const users = await prisma.user.findMany()
     res.send(users);
 });
 
