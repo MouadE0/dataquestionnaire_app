@@ -1,10 +1,22 @@
-/* const fs = require("fs");
-const path = require("path");
-const { PrismaClient } = require('@prisma/client');
-const { parse } = require('csv-parse');
+import fs from "fs";
+import path from "path";
+import { PrismaClient } from '@prisma/client';
+import { parse } from 'csv-parse';
 
 const prisma = new PrismaClient();
-
+type DataRow = {
+  id: string;
+  theme: string | null;
+  subtheme: string | null;
+  indicator: string | null;
+  description: string | null;
+  entity: string | null;
+  period: string | null;
+  value: string | null;
+  unit: string | null;
+  supporting_doc_link: string | null;
+  comment: string | null;
+};
 (async () => {
     try {
         // Check if indicators already exist in the database
@@ -29,18 +41,17 @@ const prisma = new PrismaClient();
                     resolve(parsed);
                 }
             });
-        });
+        }) as DataRow[];
 
         // Insert indicators into the database
         await prisma.indicator.createMany({
-            data: parsedData.map((row: { id: any; theme: any; subtheme: any; indicator: any; description: any; entity: any; period: string; value: any; unit: any; supporting_doc_link: any; comment: any; }) => ({
-                id: row.id,
+            data: parsedData.map((row) => ({
                 theme: row.theme || null,
                 subtheme: row.subtheme || null,
                 indicator: row.indicator || null,
-                description: row.description || null,
+                description: row.description || "empty",
                 entity: row.entity || null,
-                period: parseInt(row.period) || null,
+                period: row.period || null,
                 value: row.value || null,
                 unit: row.unit || null,
                 supporting_doc_link: row.supporting_doc_link || null,
@@ -56,4 +67,3 @@ const prisma = new PrismaClient();
         await prisma.$disconnect();
     }
 })();
- */

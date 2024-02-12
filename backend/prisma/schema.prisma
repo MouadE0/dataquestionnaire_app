@@ -10,14 +10,14 @@ datasource db {
 
 model Indicator {
   id                  Int  @id @default(autoincrement())
-  theme               String
-  subtheme            String
-  indicator           String
-  description         String
-  entity              String
-  period              Int
-  value               String
-  unit                String
+  theme               String?
+  subtheme            String?
+  indicator           String?
+  description         String?
+  entity              String?
+  period              String?
+  value               String?
+  unit                String?
   supporting_doc_link String?
   comment             String?
 }
