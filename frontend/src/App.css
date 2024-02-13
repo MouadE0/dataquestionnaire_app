@@ -3,7 +3,7 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 10vmin;
   pointer-events: none;
 }
 
@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #282c34; 
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,4 +35,46 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.Search-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.SearchResults {
+  margin-top: 20px;
+}
+
+.SearchResultsItem {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.SearchResultsItem p {
+  margin: 5px 0;
+}
+
+.SearchResultsItem h3 {
+  margin-bottom: 10px;
+}
+
+.SearchResultsItem h4 {
+  margin-top: 5px;
 }

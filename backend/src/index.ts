@@ -16,7 +16,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 
-app.get("/indicators", async (req, res) => {
+app.get("/Getallindicators", async (req, res) => {
     try {
         const indicators = await prisma.indicator.findMany();
         res.json(indicators);
@@ -38,7 +38,31 @@ app.post("/submitForm", async (req: Request, res: Response) => {
       console.error("Error submitting form:", error);
       res.status(500).json({ error: "Failed to submit form" });
     }
-  });
+});
+
+app.get("/indicators", async (req, res) => {
+    try {
+        console.log("ROUTE /indicators called");
+        const { keywords } = req.query;
+        console.log("Logging keywords");
+        let indicators;
+        if (keywords) {
+            indicators = await prisma.indicator.findMany({
+                where: {
+                    indicator: {
+                        contains: keywords.toString() 
+                    }
+                }
+            });
+        } else {
+            indicators = await prisma.indicator.findMany();
+        }
+        res.json(indicators);
+    } catch (error) {
+        console.error("Error fetching indicators:", error);
+        res.status(500).json({ error: "Failed to fetch indicators" });
+    }
+});
 
 
 

@@ -6,3 +6,10 @@ npx prisma migrate dev --name init                  // POUR LANCER LA MIGRATION 
 
 
 ts-node loadData.ts POUR CREER LA DONNEE 
+
+
+## Improvement : 
+Add the users logic to the app, adding users table, company id and user id in the forms and indicators etc
+Add authentification and login
+Add jwt to api calls
+Add feautures tests

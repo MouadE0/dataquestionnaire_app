@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import axios from "axios";
@@ -20,6 +20,23 @@ function App() {
     conditionalityRule: "",
   });
 
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [searchResults, setSearchResults] = useState<{
+    id: number;
+    indicator: string;
+    section: string;
+    definition: string;
+    unitCode: string;
+    unit: string;
+    choices: string;
+    value: string;
+    notAvailable: string;
+    currentComments: string;
+    newComment: string;
+    conditionalityRule: string;
+  }[]>([]);
+
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -40,6 +57,53 @@ function App() {
       alert("Failed to submit form. Please try again.");
     }
   };
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get("/indicators", {
+        params: {
+          keywords: searchKeyword
+        }
+      });
+      setSearchResults(response.data);
+    } catch (error) {
+      console.error("Error searching indicators:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchIndicators = async () => {
+      try {
+        const response = await axios.get("/indicators");
+        const resultsWithIds = response.data.map((result: any, index: number) => ({
+          id: index + 1, 
+          indicator: result.indicator,
+        }));
+        setSearchResults(resultsWithIds);
+      } catch (error) {
+        console.error("Error fetching indicators:", error);
+      }
+    };
+
+    fetchIndicators();
+  }, []);
+
+  const filteredResults = searchResults.filter((result) =>
+    result.indicator.toLowerCase().includes(searchKeyword.toLowerCase())
+    ).map((result) => ({
+      id: result.id,
+      indicator: result.indicator,
+      section: result.section,
+      definition: result.definition,
+      unitCode: result.unitCode,
+      unit: result.unit,
+      choices: result.choices,
+      value: result.value,
+      notAvailable: result.notAvailable,
+      currentComments: result.currentComments,
+      newComment: result.newComment,
+      conditionalityRule: result.conditionalityRule,
+    }));
 
   return (
     <div className="App">
@@ -152,6 +216,37 @@ function App() {
             </div>
             <button type="submit">Submit</button>
           </form>
+        </div>
+        <div>
+          <h2>Search Indicators</h2>
+          <input
+            type="text"
+            value={searchKeyword}
+            onChange={(e) => setSearchKeyword(e.target.value)}
+          />
+          <button onClick={handleSearch}>Search</button>
+        </div>
+        <div className="SearchResults">
+          <h2>Search Results</h2>
+          {filteredResults.length > 0 ? (
+            filteredResults.map((result) => (
+              <div key={result.id} className="SearchResultsItem">
+                <h3>Section: {result.section}</h3>
+                <p>Indicator: {result.indicator}</p>
+                <p>Definition: {result.definition}</p>
+                <p>Unit Code: {result.unitCode}</p>
+                <p>Unit: {result.unit}</p>
+                <p>Choices: {result.choices}</p>
+                <p>Value: {result.value}</p>
+                <p>Not Available: {result.notAvailable}</p>
+                <p>Current Comments: {result.currentComments}</p>
+                <p>New Comment: {result.newComment}</p>
+                <p>Conditionality Rule: {result.conditionalityRule}</p>
+              </div>
+            ))
+          ) : (
+            <p>No results found</p>
+          )}
         </div>
         <a
           className="App-link"
