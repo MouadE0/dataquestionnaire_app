@@ -16,7 +16,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 
-app.get("/Getallindicators", async (req, res) => {
+app.get("/indicators/all", async (req, res) => {
     try {
         const indicators = await prisma.indicator.findMany();
         res.json(indicators);
@@ -25,14 +25,12 @@ app.get("/Getallindicators", async (req, res) => {
     }
 });
 
-app.post("/submitForm", async (req: Request, res: Response) => {
+app.post("/form/submit", async (req: Request, res: Response) => {
     try {
       const formData = req.body;
-      console.log("Received form data:", formData);
       const newFormEntry = await prisma.forms.create({
         data: formData,
       });
-      console.log("Form entry created:", newFormEntry);
       res.status(201).json(newFormEntry);
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -42,9 +40,7 @@ app.post("/submitForm", async (req: Request, res: Response) => {
 
 app.get("/indicators", async (req, res) => {
     try {
-        console.log("ROUTE /indicators called");
         const { keywords } = req.query;
-        console.log("Logging keywords");
         let indicators;
         if (keywords) {
             indicators = await prisma.indicator.findMany({

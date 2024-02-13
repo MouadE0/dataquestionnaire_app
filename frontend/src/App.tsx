@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import axios from "axios";
 
@@ -45,8 +44,7 @@ function App() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      console.log("FormData at the frontend", formData)
-      await axios.post("/submitForm", formData, {
+      await axios.post("/form/submit", formData, {
         headers: {
           "Content-Type": "application/json"
         }
@@ -76,7 +74,7 @@ function App() {
       try {
         const response = await axios.get("/indicators");
         const resultsWithIds = response.data.map((result: any, index: number) => ({
-          id: index + 1, 
+          id: result.indicator.id, 
           indicator: result.indicator,
         }));
         setSearchResults(resultsWithIds);
@@ -107,11 +105,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
+      <header className="App-header">        
         <div>
           <h2>User Form</h2>
           <form onSubmit={handleSubmit}>
@@ -248,13 +242,6 @@ function App() {
             <p>No results found</p>
           )}
         </div>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-        </a>
       </header>
     </div>
   );
