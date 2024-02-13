@@ -21,3 +21,18 @@ model Indicator {
   supporting_doc_link String?
   comment             String?
 }
+
+model Forms {
+  id           Int      @id @default(autoincrement())
+  section      String?
+  indicator    String?
+  definition   String?
+  unitCode     String?
+  unit         String?
+  choices      String?
+  value        String?
+  notAvailable String?
+  currentComments String?
+  newComment   String?
+  conditionalityRule String?
+}

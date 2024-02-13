@@ -1,9 +1,8 @@
 docker-compose down -v 
-docker-compose build && ...... up
+docker-compose build && docker-compose up
+npx prisma generate                                 // if ever the prisma.schema is changed 
+npx prisma migrate dev --name init                  // POUR LANCER LA MIGRATION SUR LA DB
 
 
 
-npx prisma migrate dev --name init POUR LANCER LA MIGRATION SUR LA DB
 ts-node loadData.ts POUR CREER LA DONNEE 
-npx prisma generate if ever the prisma.schema is changed 
-$ ts-node loadData.ts
