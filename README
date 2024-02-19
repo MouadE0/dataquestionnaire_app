@@ -1,11 +1,35 @@
-docker-compose down -v 
+# Data Questionnaire App
+
+This repository contains the source code for the Data Questionnaire App, a web application built with TypeScript, React, Express, PostgreSQL, Prisma, and Docker. It provides a platform for users to submit forms and search for indicators.
+
+## Getting Started
+
+To run the application locally, follow these steps:
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/MouadE0/dataquestionnaire_app
+
+2. **Install dependencies:**
+cd dataquestionnaire_app/backend
+npm install
+cd ../frontend
+npm install
+
+3. **Container start:**
+cd ..
+docker-compose down -v
 docker-compose build && docker-compose up
-npx prisma generate                                 // if ever the prisma.schema is changed 
-npx prisma migrate dev --name init                  // POUR LANCER LA MIGRATION SUR LA DB
 
+4. **Generate prisma artifacts and apply migration:**
+- Only once the containers are all up and running
+npx prisma generate
+npx prisma migrate dev --name init
 
+5. **Load data if necessary:**
+cd src
+ts-node loadData.ts
 
-ts-node loadData.ts POUR CREER LA DONNEE 
 
 
 ## Improvement : 
