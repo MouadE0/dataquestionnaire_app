@@ -30,6 +30,11 @@ npx prisma migrate dev --name init
 cd src
 ts-node loadData.ts
 
+## Using the app : 
+
+Navigate to http://localhost:3000 to type in forms and searching for indicators with key words. 
+Having a  database administration tool can be handy to visualize the loading of the data after step 5, and visualizing new form records in the database.
+
 
 
 ## Improvement : 
